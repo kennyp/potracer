@@ -1,6 +1,8 @@
 *.o
 *.so
 *.log
+*.swp
+*.gem
 ext/**/extconf.h
 ext/**/Makefile
 lib/potracer
