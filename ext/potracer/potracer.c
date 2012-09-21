@@ -39,6 +39,52 @@ static VALUE params_set_turnpolicy (VALUE klass, VALUE policy) {
     return policy;
 }
 
+static VALUE params_get_alphamax (VALUE klass) {
+    potrace_param_t *params;
+    Data_Get_Struct(klass, potrace_param_t, params);
+    return rb_float_new(params->alphamax);
+}
+
+static VALUE params_set_alphamax (VALUE klass, VALUE max) {
+    potrace_param_t *params;
+    Data_Get_Struct(klass, potrace_param_t, params);
+    params->alphamax = NUM2DBL(max);
+    return max;
+}
+
+static VALUE params_get_opticurve (VALUE klass) {
+    potrace_param_t *params;
+    Data_Get_Struct(klass, potrace_param_t, params);
+    return (params->opticurve == 1) ? Qtrue : Qfalse;
+}
+
+static VALUE params_set_opticurve_true (VALUE klass) {
+    potrace_param_t *params;
+    Data_Get_Struct(klass, potrace_param_t, params);
+    params->opticurve = 1;
+    return Qtrue;
+}
+
+static VALUE params_set_opticurve_false (VALUE klass) {
+    potrace_param_t *params;
+    Data_Get_Struct(klass, potrace_param_t, params);
+    params->opticurve = 0;
+    return Qfalse;
+}
+
+static VALUE params_get_opttolerance (VALUE klass) {
+    potrace_param_t *params;
+    Data_Get_Struct(klass, potrace_param_t, params);
+    return rb_float_new(params->opttolerance);
+}
+
+static VALUE params_set_opttolerance (VALUE klass, VALUE tolerance) {
+    potrace_param_t *params;
+    Data_Get_Struct(klass, potrace_param_t, params);
+    params->opttolerance = NUM2DBL(tolerance);
+    return tolerance;
+}
+
 static VALUE trace_alloc (VALUE klass, VALUE bitmap, VALUE params) {
   const potrace_bitmap_t *bm;
   const potrace_param_t *param;
@@ -68,6 +114,13 @@ void Init_potracer () {
   rb_define_method(rb_cPotracerParams, "turd_size=", params_set_turdsize, 1);
   rb_define_method(rb_cPotracerParams, "turn_policy", params_get_turnpolicy, 0);
   rb_define_method(rb_cPotracerParams, "turn_policy=", params_set_turnpolicy, 1);
+  rb_define_method(rb_cPotracerParams, "alpha_max", params_get_alphamax, 0);
+  rb_define_method(rb_cPotracerParams, "alpha_max=", params_set_alphamax, 1);
+  rb_define_method(rb_cPotracerParams, "optimized?", params_get_opticurve, 0);
+  rb_define_method(rb_cPotracerParams, "optimize!", params_set_opticurve_true, 0);
+  rb_define_method(rb_cPotracerParams, "unoptimize!", params_set_opticurve_false, 0);
+  rb_define_method(rb_cPotracerParams, "tolerance", params_get_opttolerance, 0);
+  rb_define_method(rb_cPotracerParams, "tolerance=", params_set_opttolerance, 1);
 
   // Define the Turnpolicy module inside the Potracer module
   rb_mTurnpolicy = rb_define_module_under(rb_mPotracer, "Turnpolicy");
