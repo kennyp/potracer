@@ -1,0 +1,4 @@
+Potracer
+========
+
+Ruby wrapper for Potrace.

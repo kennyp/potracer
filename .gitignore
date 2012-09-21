@@ -1,0 +1,5 @@
+*.o
+*.so
+*.log
+ext/**/extconf.h
+ext/**/Makefile
