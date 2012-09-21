@@ -8,6 +8,10 @@ static VALUE rb_mTurnpolicy;
 static VALUE rb_cPotracerTrace;
 static VALUE rb_cPotracerParams;
 
+static void rb_progress (double progress, void *callback) {
+    rb_funcall(callback, rb_intern("call"), 1, rb_float_new(progress));
+}
+
 static VALUE params_alloc (VALUE klass) {
     potrace_param_t *params = potrace_param_default();
     return Data_Wrap_Struct(klass, 0, potrace_param_free, params);
@@ -85,17 +89,34 @@ static VALUE params_set_opttolerance (VALUE klass, VALUE tolerance) {
     return tolerance;
 }
 
-static VALUE trace_alloc (VALUE klass, VALUE bitmap, VALUE params) {
+static void trace_mark (potrace_state_t state) {
+}
+
+static VALUE trace_alloc (VALUE klass) {
+    potrace_state_t *trace = NULL;
+    return Data_Wrap_Struct(klass, trace_mark, potrace_state_free, trace);
+}
+
+static VALUE trace_trace (VALUE obj, VALUE bitmap, VALUE params) {
   const potrace_bitmap_t *bm;
-  const potrace_param_t *param;
-  potrace_state_t *trace;
+  potrace_param_t *param;
+  VALUE p;
 
   Data_Get_Struct(bitmap, potrace_bitmap_t, bm);
   Data_Get_Struct(params, potrace_param_t, param);
 
-  trace = potrace_trace(param, bm);
+  if (rb_block_given_p()) {
+      p = rb_block_proc();
+      param->progress.callback = &rb_progress;
+      param->progress.data = p;
+  }
 
-  return Data_Wrap_Struct(klass, 0, potrace_state_free, trace);
+  DATA_PTR(obj) = potrace_trace(param, bm);
+
+  rb_gc_mark(bitmap);
+  rb_gc_mark(params);
+
+  return Qnil;
 }
 
 void Init_potracer () {
@@ -105,7 +126,8 @@ void Init_potracer () {
 
   // Define the Trace class inside the Potracer module
   rb_cPotracerTrace = rb_define_class_under(rb_mPotracer, "Trace", rb_cObject);
-  rb_define_singleton_method(rb_cPotracerTrace, "new", trace_alloc, 2);
+  rb_define_alloc_func(rb_cPotracerTrace, trace_alloc);
+  rb_define_private_method(rb_cPotracerTrace, "do_trace", trace_trace, 2);
 
   // Define the Params class inside the Potracer module
   rb_cPotracerParams = rb_define_class_under(rb_mPotracer, "Params", rb_cObject);
