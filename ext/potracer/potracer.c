@@ -4,6 +4,7 @@
 
 // Tracing
 static VALUE rb_mPotracer;
+static VALUE rb_mTurnpolicy;
 static VALUE rb_cPotracerTrace;
 static VALUE rb_cPotracerParams;
 
@@ -67,4 +68,14 @@ void Init_potracer () {
   rb_define_method(rb_cPotracerParams, "turd_size=", params_set_turdsize, 1);
   rb_define_method(rb_cPotracerParams, "turn_policy", params_get_turnpolicy, 0);
   rb_define_method(rb_cPotracerParams, "turn_policy=", params_set_turnpolicy, 1);
+
+  // Define the Turnpolicy module inside the Potracer module
+  rb_mTurnpolicy = rb_define_module_under(rb_mPotracer, "Turnpolicy");
+  rb_define_const(rb_mTurnpolicy, "BLACK", rb_int_new(POTRACE_TURNPOLICY_BLACK));
+  rb_define_const(rb_mTurnpolicy, "WHITE", rb_int_new(POTRACE_TURNPOLICY_WHITE));
+  rb_define_const(rb_mTurnpolicy, "LEFT", rb_int_new(POTRACE_TURNPOLICY_LEFT));
+  rb_define_const(rb_mTurnpolicy, "RIGHT", rb_int_new(POTRACE_TURNPOLICY_RIGHT));
+  rb_define_const(rb_mTurnpolicy, "MINORITY", rb_int_new(POTRACE_TURNPOLICY_MINORITY));
+  rb_define_const(rb_mTurnpolicy, "MAJORITY", rb_int_new(POTRACE_TURNPOLICY_MAJORITY));
+  rb_define_const(rb_mTurnpolicy, "RANDOM", rb_int_new(POTRACE_TURNPOLICY_RANDOM));
 }
