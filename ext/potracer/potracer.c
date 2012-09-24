@@ -2,102 +2,133 @@
 #include "extconf.h"
 #include "potracelib.h"
 
-// Tracing
 static VALUE rb_mPotracer;
 static VALUE rb_mTurnpolicy;
 static VALUE rb_cPotracerTrace;
 static VALUE rb_cPotracerParams;
 
-static void rb_progress (double progress, void *callback) {
+static void
+rb_progress (double progress, void *callback)
+{
     rb_funcall(callback, rb_intern("call"), 1, rb_float_new(progress));
 }
 
-static VALUE params_alloc (VALUE klass) {
+static VALUE
+params_alloc (VALUE klass)
+{
     potrace_param_t *params = potrace_param_default();
     return Data_Wrap_Struct(klass, 0, potrace_param_free, params);
 }
 
-static VALUE params_get_turdsize (VALUE klass) {
+static VALUE
+params_get_turdsize (VALUE klass)
+{
     potrace_param_t *params;
     Data_Get_Struct(klass, potrace_param_t, params);
     return rb_int_new(params->turdsize);
 }
 
-static VALUE params_set_turdsize (VALUE klass, VALUE size) {
+static VALUE
+params_set_turdsize (VALUE klass, VALUE size)
+{
     potrace_param_t *params;
     Data_Get_Struct(klass, potrace_param_t, params);
     params->turdsize = NUM2INT(size);
     return size;
 }
 
-static VALUE params_get_turnpolicy (VALUE klass) {
+static VALUE
+params_get_turnpolicy (VALUE klass)
+{
     potrace_param_t *params;
     Data_Get_Struct(klass, potrace_param_t, params);
     return rb_int_new(params->turnpolicy);
 }
 
-static VALUE params_set_turnpolicy (VALUE klass, VALUE policy) {
+static VALUE
+params_set_turnpolicy (VALUE klass, VALUE policy)
+{
     potrace_param_t *params;
     Data_Get_Struct(klass, potrace_param_t, params);
     params->turdsize = NUM2INT(policy);
     return policy;
 }
 
-static VALUE params_get_alphamax (VALUE klass) {
+static VALUE
+params_get_alphamax (VALUE klass)
+{
     potrace_param_t *params;
     Data_Get_Struct(klass, potrace_param_t, params);
     return rb_float_new(params->alphamax);
 }
 
-static VALUE params_set_alphamax (VALUE klass, VALUE max) {
+static VALUE
+params_set_alphamax (VALUE klass, VALUE max)
+{
     potrace_param_t *params;
     Data_Get_Struct(klass, potrace_param_t, params);
     params->alphamax = NUM2DBL(max);
     return max;
 }
 
-static VALUE params_get_opticurve (VALUE klass) {
+static VALUE
+params_get_opticurve (VALUE klass)
+{
     potrace_param_t *params;
     Data_Get_Struct(klass, potrace_param_t, params);
     return (params->opticurve == 1) ? Qtrue : Qfalse;
 }
 
-static VALUE params_set_opticurve_true (VALUE klass) {
+static VALUE
+params_set_opticurve_true (VALUE klass)
+{
     potrace_param_t *params;
     Data_Get_Struct(klass, potrace_param_t, params);
     params->opticurve = 1;
     return Qtrue;
 }
 
-static VALUE params_set_opticurve_false (VALUE klass) {
+static VALUE
+params_set_opticurve_false (VALUE klass)
+{
     potrace_param_t *params;
     Data_Get_Struct(klass, potrace_param_t, params);
     params->opticurve = 0;
     return Qfalse;
 }
 
-static VALUE params_get_opttolerance (VALUE klass) {
+static VALUE
+params_get_opttolerance (VALUE klass)
+{
     potrace_param_t *params;
     Data_Get_Struct(klass, potrace_param_t, params);
     return rb_float_new(params->opttolerance);
 }
 
-static VALUE params_set_opttolerance (VALUE klass, VALUE tolerance) {
+static VALUE
+params_set_opttolerance (VALUE klass, VALUE tolerance)
+{
     potrace_param_t *params;
     Data_Get_Struct(klass, potrace_param_t, params);
     params->opttolerance = NUM2DBL(tolerance);
     return tolerance;
 }
 
-static void trace_mark (potrace_state_t state) {
+static void
+trace_mark (potrace_state_t state)
+{
 }
 
-static VALUE trace_alloc (VALUE klass) {
+static VALUE
+trace_alloc (VALUE klass)
+{
     potrace_state_t *trace = NULL;
     return Data_Wrap_Struct(klass, trace_mark, potrace_state_free, trace);
 }
 
-static VALUE trace_trace (VALUE obj, VALUE bitmap, VALUE params) {
+static VALUE
+trace_trace (VALUE obj, VALUE bitmap, VALUE params)
+{
   const potrace_bitmap_t *bm;
   potrace_param_t *param;
   VALUE p;
@@ -119,7 +150,8 @@ static VALUE trace_trace (VALUE obj, VALUE bitmap, VALUE params) {
   return Qnil;
 }
 
-void Init_potracer () {
+void
+Init_potracer () {
   // Define the Potracer module
   rb_mPotracer = rb_define_module("Potracer");
   rb_define_const(rb_mPotracer, "VERSION", rb_str_new2(potrace_version()));
