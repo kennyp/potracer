@@ -6,3 +6,5 @@
 ext/**/extconf.h
 ext/**/Makefile
 lib/potracer
+pkg
+tmp

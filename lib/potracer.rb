@@ -1,4 +1,4 @@
-require 'potracer/potracer'
+require 'potracer_ext/potracer'
 
 module Potracer
   class Trace

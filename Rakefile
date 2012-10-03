@@ -1,37 +1,36 @@
-require 'rake/testtask'
+require 'rubygems'
 require 'rake/clean'
+require 'rspec/core/rake_task'
+require 'rake/extensiontask'
 
-NAME = 'potracer'
 
-# rule to build the extension: this says
-# that the extension should be rebuilt
-# after any change to the files in ext
-file "lib/#{NAME}/#{NAME}.so" =>
-    Dir.glob("ext/#{NAME}/*{.rb,.c}") do
-  Dir.chdir("ext/#{NAME}") do
-    # this does essentially the same thing
-    # as what RubyGems does
-    ruby "extconf.rb"
-    sh "make"
-  end
-  cp "ext/#{NAME}/#{NAME}.so", "lib/#{NAME}"
+spec = Gem::Specification.new do |s|
+  s.name        = 'potracer'
+  s.version     = '0.0.0'
+  s.date        = '2012-09-20'
+  s.summary     = "Ruby bindings for potrace."
+  s.description = "Ruby bindings for potrace."
+  s.authors     = ["Kenny Parnell"]
+  s.email       = 'k.parnell@gmail.com'
+  s.files       = Dir.glob('lib/**/*.rb')
+  s.extensions  = ['ext/potracer/extconf.rb']
+  s.homepage    = 'https://github.com/kparnell/potracer'
 end
 
-# make the :test task depend on the shared
-# object, so it will be built automatically
-# before running the tests
-task :test => "lib/#{NAME}/#{NAME}.so"
-
-# use 'rake clean' and 'rake clobber' to
-# easily delete generated files
-CLEAN.include('ext/**/*{.o,.log,.so}')
-CLEAN.include('ext/**/Makefile')
-CLOBBER.include('lib/**/*.so')
-
-# the same as before
-Rake::TestTask.new do |t|
-  t.libs << 'test'
+Gem::PackageTask.new(spec) do |pkg|
 end
 
-desc "Run tests"
-task :default => :test
+Rake::ExtensionTask.new do |ext|
+  ext.name = 'potracer'
+  ext.ext_dir = 'ext/potracer'
+  ext.lib_dir = 'lib/potracer_ext'
+  ext.gem_spec = spec
+end
+
+
+task :spec => :compile
+
+RSpec::Core::RakeTask.new(:spec)
+
+desc "Run specs"
+task :default => :spec

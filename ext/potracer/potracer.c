@@ -10,7 +10,7 @@ static VALUE rb_cPotracerParams;
 static void
 rb_progress (double progress, void *callback)
 {
-    rb_funcall(callback, rb_intern("call"), 1, rb_float_new(progress));
+    rb_funcall((VALUE)callback, rb_intern("call"), 1, rb_float_new(progress));
 }
 
 static VALUE
@@ -49,8 +49,9 @@ static VALUE
 params_set_turnpolicy (VALUE klass, VALUE policy)
 {
     potrace_param_t *params;
+    printf("Setting Policy");
     Data_Get_Struct(klass, potrace_param_t, params);
-    params->turdsize = NUM2INT(policy);
+    params->turnpolicy = NUM2INT(policy);
     return policy;
 }
 
@@ -139,7 +140,7 @@ trace_trace (VALUE obj, VALUE bitmap, VALUE params)
   if (rb_block_given_p()) {
       p = rb_block_proc();
       param->progress.callback = &rb_progress;
-      param->progress.data = p;
+      param->progress.data = (void *)p;
   }
 
   DATA_PTR(obj) = potrace_trace(param, bm);
