@@ -46,3 +46,33 @@ describe Potracer::Turnpolicy do
     Potracer::Turnpolicy.constants.should include(*ps)
   end
 end
+
+describe Potracer::Bitmap do
+  it 'should allow you to define a new empty bitmap' do
+    bmp = Potracer::Bitmap.new
+    bmp.width.should eq(250)
+    bmp.height.should eq(250)
+  end
+
+  it 'should let you specify height and width when being created' do
+    bmp = Potracer::Bitmap.new(100, 100)
+    bmp.width.should eq(100)
+    bmp.height.should eq(100)
+  end
+
+  it 'should let you provide the bitmap when being created' do
+    orig = [
+      [1, 1, 1, 1, 1],
+      [1, 0, 0, 0, 1],
+      [1, 0, 0, 0, 1],
+      [1, 0, 0, 0, 1],
+      [1, 1, 1, 1, 1]
+    ]
+    bmp = Potracer::Bitmap.new(5, 5, orig)
+    bmp.to_a.should eq(orig)
+  end
+end
+
+describe Potracer::Trace do
+  it 'should allow you to trace a bitmap'
+end
