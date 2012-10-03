@@ -27,10 +27,10 @@ Rake::ExtensionTask.new do |ext|
   ext.gem_spec = spec
 end
 
-
-task :spec => :compile
-
 RSpec::Core::RakeTask.new(:spec)
+
 
 desc "Run specs"
 task :default => :spec
+
+task :spec => :compile
