@@ -151,32 +151,39 @@ trace_trace (VALUE obj, VALUE bitmap, VALUE params)
 static VALUE
 trace_as_array (VALUE klass)
 {
+  VALUE rpath, rparts;
   VALUE result = rb_ary_new();
-  potrace_path_t *p;
-  int i, n, *tag;
+  potrace_path_t *path;
+  int i, num_segments, *tag;
   potrace_dpoint_t (*c)[3];
   potrace_state_t *trace = NULL;
   Data_Get_Struct(klass, potrace_state_t, trace);
 
   if (trace->status == POTRACE_STATUS_OK) {
-    p = trace->plist;
-    while (p != NULL) {
-      n = p->curve.n;
-      tag = p->curve.tag;
-      c = p->curve.c;
-      MOVE_TO(result, c[n-1][2]);
-      for (i = 0; i < n; i++) {
+    path = trace->plist;
+    while (path != NULL) {
+      rparts = rb_ary_new();
+      num_segments = path->curve.n;
+      tag = path->curve.tag;
+      c = path->curve.c;
+      MOVE_TO(rparts, c[num_segments-1][2]);
+      for (i = 0; i < num_segments; i++) {
         switch (tag[i]) {
         case POTRACE_CORNER:
-            LINE_TO(result, c[i][1]);
-            LINE_TO(result, c[i][2]);
-            break;
-          case POTRACE_CURVETO:
-            CURVE_TO(result, c[i]);
-            break;
+          LINE_TO(rparts, c[i][1]);
+          LINE_TO(rparts, c[i][2]);
+          break;
+        case POTRACE_CURVETO:
+          CURVE_TO(rparts, c[i]);
+          break;
         }
       }
-      p = p->next;
+      rpath = rb_hash_new();
+      rb_hash_aset(rpath, STRSYM("area"), rb_int_new(path->area));
+      rb_hash_aset(rpath, STRSYM("sign"), rb_str_new2(path->area == '+' ? "+" : "-"));
+      rb_hash_aset(rpath, STRSYM("parts"), rparts);
+      rb_ary_push(result, rpath);
+      path = path->next;
     }
   }
 
