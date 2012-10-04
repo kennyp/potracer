@@ -1,32 +1,9 @@
 #include "ruby.h"
+
 #include "extconf.h"
 #include "potracelib.h"
 
-#define BM_WIDTH 250
-#define BM_HEIGHT 250
-#define BM_WORDSIZE ((int)sizeof(potrace_word))
-#define BM_WORDBITS (8*BM_WORDSIZE)
-#define BM_HIBIT (((potrace_word)1)<<(BM_WORDBITS-1))
-#define bm_scanline(bm, y) ((bm)->map + (y)*(bm)->dy)
-#define bm_index(bm, x, y) (&bm_scanline(bm, y)[(x)/BM_WORDBITS])
-#define bm_mask(x) (BM_HIBIT >> ((x) & (BM_WORDBITS-1)))
-#define bm_range(x, a) ((int)(x) >= 0 && (int)(x) < (a))
-#define bm_safe(bm, x, y) (bm_range(x, (bm)->w) && bm_range(y, (bm)->h))
-#define BM_USET(bm, x, y) (*bm_index(bm, x, y) |= bm_mask(x))
-#define BM_UCLR(bm, x, y) (*bm_index(bm, x, y) &= ~bm_mask(x))
-#define BM_UPUT(bm, x, y, b) ((b) ? BM_USET(bm, x, y) : BM_UCLR(bm, x, y))
-#define BM_PUT(bm, x, y, b) (bm_safe(bm, x, y) ? BM_UPUT(bm, x, y, b) : 0)
-#define BM_UGET(bm, x, y) ((*bm_index(bm, x, y) & bm_mask(x)) != 0)
-#define BM_GET(bm, x, y) (bm_safe(bm, x, y) ? BM_UGET(bm, x, y) : 0)
-#define MOVE_TO(ar, c) rb_ary_push(ar, rb_ary_new3(3, ID2SYM(rb_intern("moveto")), rb_float_new(c.x), rb_float_new(c.y)))
-#define LINE_TO(ar, c) rb_ary_push(ar, rb_ary_new3(3, ID2SYM(rb_intern("lineto")), rb_float_new(c.x), rb_float_new(c.y)))
-#define CURVE_TO(ar, c) rb_ary_push(ar, rb_ary_new3(7, ID2SYM(rb_intern("curveto")), rb_float_new(c[0].x), rb_float_new(c[0].y), rb_float_new(c[1].x), rb_float_new(c[1].y), rb_float_new(c[2].x), rb_float_new(c[2].y)))
-
-static VALUE rb_mPotracer;
-static VALUE rb_mTurnpolicy;
-static VALUE rb_cPotracerTrace;
-static VALUE rb_cPotracerParams;
-static VALUE rb_cPotracerBitmap;
+#include "potracer.h"
 
 static void
 rb_progress (double progress, void *callback)
