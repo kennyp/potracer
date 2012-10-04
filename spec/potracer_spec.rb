@@ -86,4 +86,12 @@ describe Potracer::Trace do
     trace = Potracer::Trace.new
     trace.trace(bmp, params).to_a.should_not be_empty
   end
+
+  it 'should allow you to track progress as you trace' do
+    x = 0
+    Potracer::Trace.new.trace(Potracer::Bitmap.new, Potracer::Params.new) do |p|
+      x = p
+    end
+    x.should eq(100)
+  end
 end

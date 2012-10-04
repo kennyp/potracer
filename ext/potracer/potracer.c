@@ -8,7 +8,7 @@
 static void
 rb_progress (double progress, void *callback)
 {
-  rb_funcall((VALUE)callback, rb_intern("call"), 1, rb_float_new(progress));
+  rb_funcall((VALUE)callback, rb_intern("call"), 1, rb_int_new(100 * progress));
 }
 
 static VALUE
