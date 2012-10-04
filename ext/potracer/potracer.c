@@ -47,7 +47,6 @@ static VALUE
 params_set_turnpolicy (VALUE klass, VALUE policy)
 {
   potrace_param_t *params;
-  printf("Setting Policy");
   Data_Get_Struct(klass, potrace_param_t, params);
   params->turnpolicy = NUM2INT(policy);
   return policy;
