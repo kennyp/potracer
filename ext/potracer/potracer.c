@@ -180,7 +180,7 @@ trace_as_array (VALUE klass)
       }
       rpath = rb_hash_new();
       rb_hash_aset(rpath, STRSYM("area"), rb_int_new(path->area));
-      rb_hash_aset(rpath, STRSYM("sign"), rb_str_new2(path->area == '+' ? "+" : "-"));
+      rb_hash_aset(rpath, STRSYM("sign"), rb_str_new2(path->sign == '+' ? "+" : "-"));
       rb_hash_aset(rpath, STRSYM("parts"), rparts);
       rb_ary_push(result, rpath);
       path = path->next;
