@@ -74,5 +74,16 @@ describe Potracer::Bitmap do
 end
 
 describe Potracer::Trace do
-  it 'should allow you to trace a bitmap'
+  it 'should allow you to trace a bitmap' do
+    bmp = Potracer::Bitmap.new(5, 5, [
+      [1, 1, 1, 1, 1],
+      [1, 0, 0, 0, 1],
+      [1, 0, 0, 0, 1],
+      [1, 0, 0, 0, 1],
+      [1, 1, 1, 1, 1]
+    ])
+    params = Potracer::Params.new
+    trace = Potracer::Trace.new
+    trace.trace(bmp, params).to_a.should_not be_empty
+  end
 end

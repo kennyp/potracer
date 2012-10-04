@@ -18,6 +18,9 @@
 #define BM_PUT(bm, x, y, b) (bm_safe(bm, x, y) ? BM_UPUT(bm, x, y, b) : 0)
 #define BM_UGET(bm, x, y) ((*bm_index(bm, x, y) & bm_mask(x)) != 0)
 #define BM_GET(bm, x, y) (bm_safe(bm, x, y) ? BM_UGET(bm, x, y) : 0)
+#define MOVE_TO(ar, c) rb_ary_push(ar, rb_ary_new3(3, ID2SYM(rb_intern("moveto")), rb_float_new(c.x), rb_float_new(c.y)))
+#define LINE_TO(ar, c) rb_ary_push(ar, rb_ary_new3(3, ID2SYM(rb_intern("lineto")), rb_float_new(c.x), rb_float_new(c.y)))
+#define CURVE_TO(ar, c) rb_ary_push(ar, rb_ary_new3(7, ID2SYM(rb_intern("curveto")), rb_float_new(c[0].x), rb_float_new(c[0].y), rb_float_new(c[1].x), rb_float_new(c[1].y), rb_float_new(c[2].x), rb_float_new(c[2].y)))
 
 static VALUE rb_mPotracer;
 static VALUE rb_mTurnpolicy;
@@ -166,7 +169,42 @@ trace_trace (VALUE obj, VALUE bitmap, VALUE params)
   rb_gc_mark(bitmap);
   rb_gc_mark(params);
 
-  return Qnil;
+  return obj;
+}
+
+static VALUE
+trace_as_array (VALUE klass)
+{
+  VALUE result = rb_ary_new();
+  potrace_path_t *p;
+  int i, n, *tag;
+  potrace_dpoint_t (*c)[3];
+  potrace_state_t *trace = NULL;
+  Data_Get_Struct(klass, potrace_state_t, trace);
+
+  if (trace->status == POTRACE_STATUS_OK) {
+    p = trace->plist;
+    while (p != NULL) {
+      n = p->curve.n;
+      tag = p->curve.tag;
+      c = p->curve.c;
+      MOVE_TO(result, c[n-1][2]);
+      for (i = 0; i < n; i++) {
+        switch (tag[i]) {
+        case POTRACE_CORNER:
+            LINE_TO(result, c[i][1]);
+            LINE_TO(result, c[i][2]);
+            break;
+          case POTRACE_CURVETO:
+            CURVE_TO(result, c[i]);
+            break;
+        }
+      }
+      p = p->next;
+    }
+  }
+
+  return result;
 }
 
 static void
@@ -192,9 +230,10 @@ bitmap_init(int argc, VALUE *argv, VALUE klass)
 static VALUE
 bitmap_new (int argc, VALUE *argv, VALUE klass)
 {
+  int i, j;
   potrace_bitmap_t *bm;
-  VALUE bdata;
-  
+  VALUE bdata, row;
+
   bdata = Data_Make_Struct(klass, potrace_bitmap_t, bitmap_mark, bitmap_free, bm);
   bm->w = (argc > 0) ? NUM2INT(argv[0]) : BM_WIDTH;
   bm->h = (argc > 1) ? NUM2INT(argv[1]) : BM_HEIGHT;
@@ -202,6 +241,12 @@ bitmap_new (int argc, VALUE *argv, VALUE klass)
   bm->map = ALLOC_N(potrace_word, bm->dy * bm->h * BM_WORDSIZE);
 
   if (argc > 2) {
+    for (i = 0; i < bm->h; i++) {
+      row = rb_ary_entry(argv[2], (long)i);
+      for (j = 0; j < bm->w; j++) {
+        BM_PUT(bm, j, i, NUM2INT(rb_ary_entry(row, (long)j)));
+      }
+    }
   }
 
   return bdata;
@@ -231,10 +276,10 @@ bitmap_as_array (VALUE klass)
   VALUE result, row;
   Data_Get_Struct(klass, potrace_bitmap_t, bm);
   result = rb_ary_new2((long)bm->h);
-  for (i = 0; i < bm->w; i++) {
+  for (i = 0; i < bm->h; i++) {
     row = rb_ary_new2((long)bm->w);
-    for (j = 0; j < bm->h; j++) {
-      rb_ary_store(row, (long)j, rb_int_new(BM_GET(bm, i, j)));
+    for (j = 0; j < bm->w; j++) {
+      rb_ary_store(row, (long)j, rb_int_new(BM_GET(bm, j, i)));
     }
     rb_ary_store(result, (long)i, row);
   }
@@ -251,7 +296,8 @@ Init_potracer () {
   // Define the Trace class inside the Potracer module
   rb_cPotracerTrace = rb_define_class_under(rb_mPotracer, "Trace", rb_cObject);
   rb_define_alloc_func(rb_cPotracerTrace, trace_alloc);
-  rb_define_private_method(rb_cPotracerTrace, "do_trace", trace_trace, 2);
+  rb_define_protected_method(rb_cPotracerTrace, "do_trace", trace_trace, 2);
+  rb_define_method(rb_cPotracerTrace, "to_a", trace_as_array, 0);
 
   // Define the Params class inside the Potracer module
   rb_cPotracerParams = rb_define_class_under(rb_mPotracer, "Params", rb_cObject);
