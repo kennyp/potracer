@@ -9,22 +9,20 @@ spec = Gem::Specification.new do |s|
   s.version     = '0.0.0'
   s.date        = '2012-09-20'
   s.summary     = "Ruby bindings for potrace."
-  s.description = "Ruby bindings for potrace."
+  s.description = "Ruby bindings for the potrace library."
   s.authors     = ["Kenny Parnell"]
   s.email       = 'k.parnell@gmail.com'
-  s.files       = Dir.glob('lib/**/*.rb')
-  s.extensions  = ['ext/potracer/extconf.rb']
+  s.platform    = Gem::Platform::RUBY
+  s.files       = FileList['lib/*.rb'] + FileList['ext/**/*.{h,c,rb}']
+  s.extensions  = FileList['ext/**/extconf.rb']
   s.homepage    = 'https://github.com/kparnell/potracer'
 end
 
 Gem::PackageTask.new(spec) do |pkg|
 end
 
-Rake::ExtensionTask.new do |ext|
-  ext.name = 'potracer'
-  ext.ext_dir = 'ext/potracer'
-  ext.lib_dir = 'lib/potracer_ext'
-  ext.gem_spec = spec
+Rake::ExtensionTask.new('potracer', spec) do |ext|
+  ext.lib_dir = 'lib/potracer/'
 end
 
 RSpec::Core::RakeTask.new(:spec)
