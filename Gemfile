@@ -5,4 +5,5 @@ group :development do
   gem 'rake'
   gem 'rake-compiler'
   gem 'pry'
+  gem 'progressbar'
 end
