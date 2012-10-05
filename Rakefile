@@ -8,7 +8,7 @@ require 'rake/extensiontask'
 
 spec = Gem::Specification.new do |s|
   s.name        = 'potracer'
-  s.version     = '1.0.2'
+  s.version     = '1.0.3'
   s.date        = Date.today.strftime('%Y-%m-%d')
   s.summary     = "Ruby bindings for potrace."
   s.description = "Ruby bindings for the potrace library."
