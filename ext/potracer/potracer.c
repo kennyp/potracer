@@ -142,9 +142,6 @@ trace_trace (VALUE obj, VALUE bitmap, VALUE params)
 
   DATA_PTR(obj) = potrace_trace(param, bm);
 
-  rb_gc_mark(bitmap);
-  rb_gc_mark(params);
-
   return obj;
 }
 
@@ -199,7 +196,7 @@ static void
 bitmap_free (potrace_bitmap_t *bm)
 {
   if (bm != NULL) {
-    free(bm->map);
+    xfree(bm->map);
   }
   free(bm);
 }
