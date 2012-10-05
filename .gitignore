@@ -8,3 +8,6 @@ ext/**/Makefile
 lib/potracer
 pkg
 tmp
+examples/*
+!examples/*.rb
+!examples/*.txt
