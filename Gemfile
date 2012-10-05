@@ -4,4 +4,5 @@ group :development do
   gem 'rspec'
   gem 'rake'
   gem 'rake-compiler'
+  gem 'pry'
 end
