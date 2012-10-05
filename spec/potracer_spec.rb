@@ -94,4 +94,14 @@ describe Potracer::Trace do
     end
     x.should eq(100)
   end
+
+  it 'should be able to handle non-homogeneous bitmaps' do
+    a = [
+      [1, 1, 1, 1, 1],
+      [1, 1, 1],
+      [1, 1, 1, 1],
+      [1]
+    ]
+    Potracer::Trace.bitmap(a).to_a.should_not be_empty
+  end
 end
