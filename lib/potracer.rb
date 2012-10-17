@@ -1,5 +1,4 @@
 require_relative 'potracer/potracer'
-require 'pry'
 
 module Potracer
   class Trace
