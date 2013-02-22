@@ -20,6 +20,10 @@
 #define MOVE_TO(ar, c) PUSH_TR(ar, 3, "moveto", RB_PAIR(c))
 #define LINE_TO(ar, c) PUSH_TR(ar, 3, "lineto", RB_PAIR(c))
 #define CURVE_TO(ar, c) PUSH_TR(ar, 7, "curveto", RB_PAIR(c[0]), RB_PAIR(c[1]), RB_PAIR(c[2]))
+#define SVG_PAIR(p) p.x, p.y
+#define SVG_MOVE_TO(f, c) fprintf(f, "M %f %f ", SVG_PAIR(c))
+#define SVG_LINE_TO(f, c) fprintf(f, "L %f %f ", SVG_PAIR(c))
+#define SVG_CURVE_TO(f, c) fprintf(f, "C %f %f %f %f %f %f", SVG_PAIR(c[0]), SVG_PAIR(c[1]), SVG_PAIR(c[2]))
 
 static VALUE rb_mPotracer;
 static VALUE rb_mTurnpolicy;

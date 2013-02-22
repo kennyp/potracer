@@ -164,6 +164,50 @@ trace_trace (VALUE obj, VALUE bitmap, VALUE params)
 }
 
 static VALUE
+trace_as_svg (VALUE klass)
+{
+  FILE *out = tmpfile();
+  char *out_buffer;
+  long size;
+  potrace_path_t *path;
+  int i, num_segments, *tag;
+  potrace_dpoint_t (*c)[3];
+  potrace_state_t *trace = NULL;
+  Data_Get_Struct(klass, potrace_state_t, trace);
+
+  fprintf(out, "<svg xmlns=\"http://www.w3.org/2000/svg\" version=\"1.1\">");
+  fprintf(out, "<path fill-rule=\"evenodd\" fill=\"rgb(0,0,0)\" d=\"");
+  if (trace->status == POTRACE_STATUS_OK) {
+    path = trace->plist;
+    while (path != NULL) {
+      num_segments = path->curve.n;
+      tag = path->curve.tag;
+      c = path->curve.c;
+      SVG_MOVE_TO(out, c[num_segments-1][2]);
+      for (i = 0; i < num_segments; i++) {
+        switch (tag[i]) {
+        case POTRACE_CORNER:
+          SVG_LINE_TO(out, c[i][1]);
+          SVG_LINE_TO(out, c[i][2]);
+          break;
+        case POTRACE_CURVETO:
+          SVG_CURVE_TO(out, c[i]);
+          break;
+        }
+      }
+      path = path->next;
+    }
+  }
+  fprintf(out, "\" /></svg>");
+
+  size = ftell(out);
+  out_buffer = ALLOC_N(char, size);
+  rewind(out);
+  fread(out_buffer, 1, size, out);
+  return rb_str_new2(out_buffer);
+}
+
+static VALUE
 trace_as_array (VALUE klass)
 {
   VALUE rpath, rparts;
@@ -307,6 +351,7 @@ Init_potracer () {
   rb_define_alloc_func(rb_cPotracerTrace, trace_alloc);
   rb_define_protected_method(rb_cPotracerTrace, "do_trace", trace_trace, 2);
   rb_define_method(rb_cPotracerTrace, "to_a", trace_as_array, 0);
+  rb_define_method(rb_cPotracerTrace, "to_svg", trace_as_svg, 0);
 
   // Define the Params class inside the Potracer module
   rb_cPotracerParams = rb_define_class_under(rb_mPotracer, "Params", rb_cObject);

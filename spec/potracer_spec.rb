@@ -114,4 +114,8 @@ describe Potracer::Trace do
   it 'should be able to process string representations' do
     Potracer::Trace.bitmap(image_string, 1886, 601).to_a.should_not be_empty
   end
+
+  it 'should be able to generate svgs' do
+    Potracer::Trace.bitmap(image_string, 1886, 601).to_svg.should start_with('<svg')
+  end
 end
