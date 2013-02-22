@@ -160,6 +160,9 @@ trace_trace (VALUE obj, VALUE bitmap, VALUE params)
 
   DATA_PTR(obj) = potrace_trace(param, bm);
 
+  rb_iv_set(obj, "@width", INT2NUM(bm->w));
+  rb_iv_set(obj, "@height", INT2NUM(bm->h));
+
   return obj;
 }
 
@@ -176,7 +179,10 @@ trace_as_svg (VALUE klass)
   potrace_state_t *trace = NULL;
   Data_Get_Struct(klass, potrace_state_t, trace);
 
-  fprintf(out, "<svg xmlns=\"http://www.w3.org/2000/svg\" version=\"1.1\">");
+  fprintf(out, "<svg xmlns=\"http://www.w3.org/2000/svg\" version=\"1.1\"");
+  fprintf(out, " width=\"%d\" height=\"%d\">",
+          NUM2INT(rb_iv_get(klass, "@width")),
+          NUM2INT(rb_iv_get(klass, "@height")));
   fprintf(out, "<path fill-rule=\"evenodd\" fill=\"rgb(0,0,0)\" d=\"");
   if (trace->status == POTRACE_STATUS_OK) {
     path = trace->plist;
