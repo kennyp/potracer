@@ -10,13 +10,18 @@ module Potracer
       end
     end
 
-    def self.bitmap(bmp, &block)
-      height = bmp.length
-      width = bmp.map {|r| r.length}.max
-      bmp.map! {|r| r.fill(0, r.length, width - r.length)}
+    def self.bitmap(bmp, width=nil, height=nil, map='RGB', &block)
+      width ||= bmp.map {|r| r.length}.max
+      height ||= bmp.length
+
+      unless bmp.is_a? String
+        bmp.map! {|r| r.fill(0, r.length, width - r.length)}
+      end
+
       trace = self.new
       params = Potracer::Params.new
-      bits = Potracer::Bitmap.new(width, height, bmp)
+      bits = Potracer::Bitmap.new(width, height, bmp, map)
+
       if block_given?
         trace.trace(bits, params, &block)
       else

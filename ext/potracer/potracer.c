@@ -5,6 +5,24 @@
 
 #include "potracer.h"
 
+static int
+is_colored (char *str, int row, int col, int cols, int size)
+{
+  int i, start;
+  unsigned char v, max, min;
+
+  start = ((row * cols * size) + (col * size));
+  max = min = str[start];
+
+  for (i = 0; i < size; i++) {
+    v =  str[start + i];
+    min = min < v ? min : v;
+    max = max > v ? max : v;
+  }
+
+  return ((min + max) / 2.0) < 128;
+}
+
 static void
 rb_progress (double progress, void *callback)
 {
@@ -210,7 +228,8 @@ bitmap_init(int argc, VALUE *argv, VALUE klass)
 static VALUE
 bitmap_new (int argc, VALUE *argv, VALUE klass)
 {
-  int i, j;
+  int i, j, m, s;
+  unsigned char *bits;
   potrace_bitmap_t *bm;
   VALUE bdata, row;
 
@@ -221,10 +240,20 @@ bitmap_new (int argc, VALUE *argv, VALUE klass)
   bm->map = ALLOC_N(potrace_word, bm->dy * bm->h * BM_WORDSIZE);
 
   if (argc > 2) {
-    for (i = 0; i < bm->h; i++) {
-      row = rb_ary_entry(argv[2], (long)i);
-      for (j = 0; j < bm->w; j++) {
-        BM_PUT(bm, j, i, NUM2INT(rb_ary_entry(row, (long)j)));
+    if (T_STRING == TYPE(argv[2])) {
+      bits = StringValuePtr(argv[2]);
+      m = strlen(StringValuePtr(argv[3]));
+      for (i = 0; i < bm->h; i++) {
+        for (j = 0; j < bm->w; j++) {
+          BM_PUT(bm, j, i, is_colored(bits, i, j, bm->w, m));
+        }
+      }
+    } else {
+      for (i = 0; i < bm->h; i++) {
+        row = rb_ary_entry(argv[2], (long)i);
+        for (j = 0; j < bm->w; j++) {
+          BM_PUT(bm, j, i, NUM2INT(rb_ary_entry(row, (long)j)));
+        }
       }
     }
   }

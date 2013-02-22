@@ -7,6 +7,7 @@ describe Potracer::Params do
     @params = Potracer::Params.new
   end
 
+
   it 'should allow you to get and set the turd size' do
     @params.turd_size.should eq(2)
     @params.turd_size = 3
@@ -74,6 +75,11 @@ describe Potracer::Bitmap do
 end
 
 describe Potracer::Trace do
+  let(:fixtures) { File.join(File.dirname(__FILE__), 'fixtures') }
+  let(:image_string) do
+    File.read(File.join(fixtures, 'image_as_rgb_string.txt'))
+  end
+
   it 'should allow you to trace a bitmap' do
     bmp = Potracer::Bitmap.new(5, 5, [
       [1, 1, 1, 1, 1],
@@ -103,5 +109,9 @@ describe Potracer::Trace do
       [1]
     ]
     Potracer::Trace.bitmap(a).to_a.should_not be_empty
+  end
+
+  it 'should be able to process string representations' do
+    Potracer::Trace.bitmap(image_string, 1886, 601).to_a.should_not be_empty
   end
 end
