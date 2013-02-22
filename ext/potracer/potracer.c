@@ -169,6 +169,7 @@ trace_as_svg (VALUE klass)
   FILE *out = tmpfile();
   char *out_buffer;
   long size;
+  VALUE svg;
   potrace_path_t *path;
   int i, num_segments, *tag;
   potrace_dpoint_t (*c)[3];
@@ -205,7 +206,9 @@ trace_as_svg (VALUE klass)
   rewind(out);
   fread(out_buffer, 1, size, out);
   fclose(out);
-  return rb_str_new2(out_buffer);
+  svg = rb_str_new(out_buffer, size);
+  xfree(out_buffer);
+  return svg;
 }
 
 static VALUE
@@ -283,6 +286,7 @@ bitmap_new (int argc, VALUE *argv, VALUE klass)
   bm->h = (argc > 1) ? NUM2INT(argv[1]) : BM_HEIGHT;
   bm->dy = (bm->w + BM_WORDBITS - 1) / BM_WORDBITS;
   bm->map = ALLOC_N(potrace_word, bm->dy * bm->h * BM_WORDSIZE);
+  memset(bm->map, 0, bm->dy * bm->h * BM_WORDSIZE);
 
   if (argc > 2) {
     if (T_STRING == TYPE(argv[2])) {
