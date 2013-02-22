@@ -204,6 +204,7 @@ trace_as_svg (VALUE klass)
   out_buffer = ALLOC_N(char, size);
   rewind(out);
   fread(out_buffer, 1, size, out);
+  fclose(out);
   return rb_str_new2(out_buffer);
 }
 
