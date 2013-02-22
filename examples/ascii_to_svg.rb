@@ -17,10 +17,4 @@ end
 
 pbar.finish
 
-puts '<svg xmlns="http://www.w3.org/2000/svg" version="1.1">'
-print "  <path fill-rule=\"evenodd\" fill=\"black\" d=\""
-trace.to_a.each do |path|
-  print path[:parts].join(' ').gsub('moveto', 'M').gsub('curveto', 'C').gsub('lineto', 'L')
-end
-puts '" />'
-puts '</svg>'
+puts trace.to_svg
