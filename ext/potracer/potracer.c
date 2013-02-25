@@ -6,7 +6,7 @@
 #include "potracer.h"
 
 static int
-is_colored (char *str, int row, int col, int cols, int size)
+is_colored (unsigned char *str, int row, int col, int cols, int size)
 {
   int i, start;
   unsigned char v, max, min;
@@ -273,16 +273,10 @@ bitmap_free (potrace_bitmap_t *bm)
   free(bm);
 }
 
-static void
-bitmap_init(int argc, VALUE *argv, VALUE klass)
-{
-  potrace_bitmap_t *bm;
-}
-
 static VALUE
 bitmap_new (int argc, VALUE *argv, VALUE klass)
 {
-  int i, j, m, s;
+  int i, j, m;
   unsigned char *bits;
   potrace_bitmap_t *bm;
   VALUE bdata, row;
@@ -296,7 +290,7 @@ bitmap_new (int argc, VALUE *argv, VALUE klass)
 
   if (argc > 2) {
     if (T_STRING == TYPE(argv[2])) {
-      bits = StringValuePtr(argv[2]);
+      bits = (unsigned char *)StringValuePtr(argv[2]);
       m = strlen(StringValuePtr(argv[3]));
       for (i = 0; i < bm->h; i++) {
         for (j = 0; j < bm->w; j++) {
