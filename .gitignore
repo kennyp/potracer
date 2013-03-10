@@ -11,3 +11,4 @@ tmp
 examples/*
 !examples/*.rb
 !examples/*.txt
+html

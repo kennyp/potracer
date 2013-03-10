@@ -1,4 +1,29 @@
-Potracer
-========
+== Introduction
 
-Ruby wrapper for Potrace.
+Potracer is a wrapper for {libpotrace}[http://potrace.sourceforge.net/].
+
+== About Potrace
+
+Potrace is a tool for tracing a bitmap, which means, transforming a bitmap into
+a smooth, scalable image. A typical use is to create EPS files from scanned data,
+such as company or university logos, handwritten notes, etc. The resulting image
+is not "jaggy" like a bitmap, but smooth. It can then be rendered at any resolution.
+
+== About Potracer
+
+Potracer wraps the Potrace library in an easy to use Ruby binding. Input can be
+in the form of a multi-dimensional array of 1s and 0s or string image data.
+Suitable string data can be gotten from {Rmagick's}[http://rmagick.rubyforge.org/]
+{export_pixels_to_str}[http://studio.imagemagick.org/RMagick/doc/image2.html#export_pixels_to_str]
+or be crafted by hand.
+
+== Usage
+
+See the +examples+ directory for sample usage.
+
+== Contact
+
+Feel free to post any issues to the {issue tracker}[https://github.com/kparnell/potracer/issues]
+and {submit pull requests}[https://github.com/kparnell/potracer/pulls].
+
+You can also email me at k.parnell 'at' gmail.com
