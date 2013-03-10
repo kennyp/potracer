@@ -24,7 +24,8 @@ Gem::PackageTask.new(spec) do |pkg|
 end
 
 Rake::ExtensionTask.new('potracer', spec) do |ext|
-  ext.lib_dir = 'lib/potracer'
+  ext.lib_dir = 'build'
+end
 end
 
 RSpec::Core::RakeTask.new(:spec)

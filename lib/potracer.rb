@@ -1,4 +1,8 @@
-require_relative 'potracer/potracer'
+begin
+  require_relative '../build/potracer'
+rescue LoadError
+  require_relative '../ext/potracer/potracer'
+end
 
 module Potracer
   class Trace
