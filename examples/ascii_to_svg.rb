@@ -1,5 +1,4 @@
-require 'pp'
-
+# Usage: cat banner.txt | ruby ascii_to_svg.rb > banner.svg
 require 'rubygems'
 require 'progressbar'
 
