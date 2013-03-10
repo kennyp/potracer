@@ -9,7 +9,7 @@ require 'rdoc/task'
 
 spec = Gem::Specification.new do |s|
   s.name        = 'potracer'
-  s.version     = '1.0.9'
+  s.version     = '1.1.0'
   s.date        = Date.today.strftime('%Y-%m-%d')
   s.summary     = 'Ruby bindings for potrace.'
   s.description = 'Ruby bindings for the potrace library.'
