@@ -2,10 +2,18 @@ require 'mkmf'
 
 RbConfig::MAKEFILE_CONFIG['CC'] = ENV['CC'] if ENV['CC']
 
-extension_name = 'potracer/potracer'
+LIBDIR = RbConfig::CONFIG['libdir']
+INCLUDEDIR = RbConfig::CONFIG['includedir']
 
-raise "potracelib.h not found" unless have_header('potracelib.h')
-raise "lib potrace not found" unless have_library('potrace', 'potrace_version')
+HEADER_DIRS = ['/opt/local/include', '/usr/local/include', INCLUDEDIR,
+  '/usr/include']
+
+LIB_DIRS = ['/opt/local/lib', '/usr/local/lib', LIBDIR, '/usr/lib']
+
+dir_config('potrace', HEADER_DIRS, LIB_DIRS)
+
+abort "potracelib.h not found" unless find_header('potracelib.h')
+abort "lib potrace not found" unless find_library('potrace', 'potrace_version')
 
 create_header
-create_makefile(extension_name)
+create_makefile('potracer/potracer')
