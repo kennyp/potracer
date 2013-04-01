@@ -2,7 +2,8 @@
 
 Potracer is a wrapper for {libpotrace}[http://potrace.sourceforge.net/].
 
-{<img src="https://travis-ci.org/kparnell/potracer.png" />}[https://travis-ci.org/kparnell/potracer] {<img src="https://codeclimate.com/github/kparnell/potracer.png" />}[https://codeclimate.com/github/kparnell/potracer]
+{<img src="https://travis-ci.org/kparnell/potracer.png" />}[https://travis-ci.org/kparnell/potracer] {<img src="https://codeclimate.com/github/kparnell/potracer.png" />}[https://codeclimate.com/github/kparnell/potracer] {<img src="https://coveralls.io/repos/kparnell/potracer/badge.png?branch=master" alt="Coverage Status" />}[https://coveralls.io/r/kparnell/potracer]
+
 
 == About Potrace
 
