@@ -1,0 +1,5 @@
+language: ruby
+before_install:
+  - sudo apt-get install -y libpotrace-dev
+rvm:
+  - 2.0.0
