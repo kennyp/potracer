@@ -118,4 +118,12 @@ describe Potracer::Trace do
   it 'should be able to generate svgs' do
     Potracer::Trace.bitmap(image_string, 1886, 601).to_svg.should start_with('<svg')
   end
+
+  it 'should be able to use a callback durring tracing' do
+    count = 0
+    Potracer::Trace.bitmap(image_string, 1886, 601) do |prog|
+      count = prog
+    end
+    count.should eq(100)
+  end
 end
