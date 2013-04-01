@@ -2,6 +2,8 @@
 
 Potracer is a wrapper for {libpotrace}[http://potrace.sourceforge.net/].
 
+{<img src="https://codeclimate.com/github/kparnell/potracer.png" />}[https://codeclimate.com/github/kparnell/potracer]
+
 == About Potrace
 
 Potrace is a tool for tracing a bitmap, which means, transforming a bitmap into
