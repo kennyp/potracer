@@ -6,4 +6,5 @@ group :development do
   gem 'rake-compiler'
   gem 'pry'
   gem 'progressbar'
+  gem 'coveralls', :require => false
 end
