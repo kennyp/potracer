@@ -2,7 +2,7 @@
 
 Potracer is a wrapper for {libpotrace}[http://potrace.sourceforge.net/].
 
-{<img src="https://travis-ci.org/kparnell/potracer.png" />}[https://travis-ci.org/kparnell/potracer] {<img src="https://codeclimate.com/github/kparnell/potracer.png" />}[https://codeclimate.com/github/kparnell/potracer] {<img src="https://coveralls.io/repos/kparnell/potracer/badge.png?branch=master" alt="Coverage Status" />}[https://coveralls.io/r/kparnell/potracer]
+{<img src="https://travis-ci.org/kennyp/potracer.png" />}[https://travis-ci.org/kennyp/potracer] {<img src="https://codeclimate.com/github/kennyp/potracer.png" />}[https://codeclimate.com/github/kennyp/potracer] {<img src="https://coveralls.io/repos/kennyp/potracer/badge.png?branch=master" alt="Coverage Status" />}[https://coveralls.io/r/kennyp/potracer]
 
 
 == About Potrace
@@ -26,7 +26,7 @@ See the +examples+ directory for sample usage.
 
 == Contact
 
-Feel free to post any issues to the {issue tracker}[https://github.com/kparnell/potracer/issues]
-and {submit pull requests}[https://github.com/kparnell/potracer/pulls].
+Feel free to post any issues to the {issue tracker}[https://github.com/kennyp/potracer/issues]
+and {submit pull requests}[https://github.com/kennyp/potracer/pulls].
 
 You can also email me at k.parnell 'at' gmail.com

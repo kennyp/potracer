@@ -18,7 +18,7 @@ spec = Gem::Specification.new do |s|
   s.platform    = Gem::Platform::RUBY
   s.files       = FileList['lib/*.rb'] + FileList['ext/**/*.{h,c,rb}']
   s.extensions  = FileList['ext/**/extconf.rb']
-  s.homepage    = 'https://github.com/kparnell/potracer'
+  s.homepage    = 'https://github.com/kennyp/potracer'
 end
 
 Gem::PackageTask.new(spec) do |pkg|
