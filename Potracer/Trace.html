@@ -43,12 +43,14 @@
 </nav>
 
 
+  
+
   <div id="file-metadata">
     <nav id="file-list-section" class="section">
   <h3 class="section-header">Defined In</h3>
   <ul>
-    <li>lib/potracer.rb
     <li>ext/potracer/potracer.c
+    <li>lib/potracer.rb
   </ul>
 </nav>
 
@@ -65,19 +67,20 @@
 </nav>
 
     
+    
     <!-- Method Quickref -->
 <nav id="method-list-section" class="section">
   <h3 class="section-header">Methods</h3>
 
   <ul class="link-list">
     
-    <li><a href="#method-c-bitmap">::bitmap</a>
+    <li ><a href="#method-c-bitmap">::bitmap</a>
     
-    <li><a href="#method-i-to_a">#to_a</a>
+    <li ><a href="#method-i-to_a">#to_a</a>
     
-    <li><a href="#method-i-to_svg">#to_svg</a>
+    <li ><a href="#method-i-to_svg">#to_svg</a>
     
-    <li><a href="#method-i-trace">#trace</a>
+    <li ><a href="#method-i-trace">#trace</a>
     
   </ul>
 </nav>
@@ -148,8 +151,10 @@ href="Bitmap.html">Potracer::Bitmap</a></p>
         
         <div class="method-heading">
           <span class="method-name">bitmap</span><span
-            class="method-args">(bmp, width=nil, height=nil, map='RGB', &block)</span>
+            class="method-args">(bmp, width = nil, height = nil, map = 'RGB', &block)</span>
+          
           <span class="method-click-advice">click to toggle source</span>
+          
         </div>
         
 
@@ -157,7 +162,7 @@ href="Bitmap.html">Potracer::Bitmap</a></p>
           
           <p><a href="Trace.html">Trace</a> a bitmap</p>
 
-<h4 id="method-c-bitmap-label-Attributes">Attributes</h4>
+<h4 id="method-c-bitmap-label-Attributes">Attributes<span><a href="#method-c-bitmap-label-Attributes">&para;</a> <a href="#documentation">&uarr;</a></span></h4>
 <ul><li>
 <p><code>bmp</code> - mapped to a <a href="Bitmap.html">Potracer::Bitmap</a>
 either a multi-dimensional array of bits or a string of image data</p>
@@ -173,35 +178,29 @@ is a string</p>
 <p><code>block</code> - optional block called to report trace progress</p>
 </li></ul>
 
-<h4 id="method-c-bitmap-label-Example">Example</h4>
+<h4 id="method-c-bitmap-label-Example">Example<span><a href="#method-c-bitmap-label-Example">&para;</a> <a href="#documentation">&uarr;</a></span></h4>
 
-<pre class="ruby"><span class="ruby-identifier">require</span> <span class="ruby-string">'ruby-progressbar'</span>
+<pre class="ruby"><span class="ruby-identifier">require</span> <span class="ruby-string">&#39;ruby-progressbar&#39;</span>
 
-<span class="ruby-identifier">pbar</span> = <span class="ruby-constant">ProgressBar</span>.<span class="ruby-identifier">create</span>(<span class="ruby-identifier">title</span><span class="ruby-operator">:</span> <span class="ruby-string">'Tracing'</span>)
+<span class="ruby-identifier">pbar</span> = <span class="ruby-constant">ProgressBar</span>.<span class="ruby-identifier">create</span>(<span class="ruby-identifier">title</span><span class="ruby-operator">:</span> <span class="ruby-string">&#39;Tracing&#39;</span>)
 <span class="ruby-constant">Potracer</span><span class="ruby-operator">::</span><span class="ruby-constant">Trace</span>.<span class="ruby-identifier">bitmap</span>(<span class="ruby-identifier">bits</span>) <span class="ruby-keyword">do</span> <span class="ruby-operator">|</span><span class="ruby-identifier">percent</span><span class="ruby-operator">|</span>
   <span class="ruby-identifier">pbar</span>.<span class="ruby-identifier">progress</span> = <span class="ruby-identifier">percent</span>
 <span class="ruby-keyword">end</span>
 <span class="ruby-identifier">pbar</span>.<span class="ruby-identifier">finish</span>
 </pre>
           
+          
 
           
           <div class="method-source-code" id="bitmap-source">
-            <pre><span class="ruby-comment"># File lib/potracer.rb, line 55</span>
-<span class="ruby-keyword">def</span> <span class="ruby-keyword">self</span>.<span class="ruby-identifier">bitmap</span>(<span class="ruby-identifier">bmp</span>, <span class="ruby-identifier">width</span>=<span class="ruby-keyword">nil</span>, <span class="ruby-identifier">height</span>=<span class="ruby-keyword">nil</span>, <span class="ruby-identifier">map</span>=<span class="ruby-string">'RGB'</span>, &amp;<span class="ruby-identifier">block</span>)
-  <span class="ruby-identifier">width</span> <span class="ruby-operator">||=</span> <span class="ruby-identifier">bmp</span>.<span class="ruby-identifier">map</span> {<span class="ruby-operator">|</span><span class="ruby-identifier">r</span><span class="ruby-operator">|</span> <span class="ruby-identifier">r</span>.<span class="ruby-identifier">length</span>}.<span class="ruby-identifier">max</span>
-  <span class="ruby-identifier">height</span> <span class="ruby-operator">||=</span> <span class="ruby-identifier">bmp</span>.<span class="ruby-identifier">length</span>
-
-  <span class="ruby-keyword">unless</span> <span class="ruby-identifier">bmp</span>.<span class="ruby-identifier">is_a?</span> <span class="ruby-constant">String</span>
-    <span class="ruby-identifier">bmp</span>.<span class="ruby-identifier">map!</span> {<span class="ruby-operator">|</span><span class="ruby-identifier">r</span><span class="ruby-operator">|</span> <span class="ruby-identifier">r</span>.<span class="ruby-identifier">fill</span>(<span class="ruby-value">0</span>, <span class="ruby-identifier">r</span>.<span class="ruby-identifier">length</span>, <span class="ruby-identifier">width</span> <span class="ruby-operator">-</span> <span class="ruby-identifier">r</span>.<span class="ruby-identifier">length</span>)}
-  <span class="ruby-keyword">end</span>
-
-  <span class="ruby-identifier">trace</span> = <span class="ruby-keyword">self</span>.<span class="ruby-identifier">new</span>
+            <pre><span class="ruby-comment"># File lib/potracer.rb, line 53</span>
+<span class="ruby-keyword">def</span> <span class="ruby-keyword">self</span>.<span class="ruby-identifier">bitmap</span>(<span class="ruby-identifier">bmp</span>, <span class="ruby-identifier">width</span> = <span class="ruby-keyword">nil</span>, <span class="ruby-identifier">height</span> = <span class="ruby-keyword">nil</span>, <span class="ruby-identifier">map</span> = <span class="ruby-string">&#39;RGB&#39;</span>, <span class="ruby-operator">&amp;</span><span class="ruby-identifier">block</span>)
+  <span class="ruby-identifier">trace</span> = <span class="ruby-identifier">new</span>
   <span class="ruby-identifier">params</span> = <span class="ruby-constant">Potracer</span><span class="ruby-operator">::</span><span class="ruby-constant">Params</span>.<span class="ruby-identifier">new</span>
-  <span class="ruby-identifier">bits</span> = <span class="ruby-constant">Potracer</span><span class="ruby-operator">::</span><span class="ruby-constant">Bitmap</span>.<span class="ruby-identifier">new</span>(<span class="ruby-identifier">width</span>, <span class="ruby-identifier">height</span>, <span class="ruby-identifier">bmp</span>, <span class="ruby-identifier">map</span>)
+  <span class="ruby-identifier">bits</span> = <span class="ruby-identifier">make_bits</span>(<span class="ruby-identifier">bmp</span>, <span class="ruby-identifier">width</span>, <span class="ruby-identifier">height</span>, <span class="ruby-identifier">map</span>)
 
   <span class="ruby-keyword">if</span> <span class="ruby-identifier">block_given?</span>
-    <span class="ruby-identifier">trace</span>.<span class="ruby-identifier">trace</span>(<span class="ruby-identifier">bits</span>, <span class="ruby-identifier">params</span>, &amp;<span class="ruby-identifier">block</span>)
+    <span class="ruby-identifier">trace</span>.<span class="ruby-identifier">trace</span>(<span class="ruby-identifier">bits</span>, <span class="ruby-identifier">params</span>, <span class="ruby-operator">&amp;</span><span class="ruby-identifier">block</span>)
   <span class="ruby-keyword">else</span>
     <span class="ruby-identifier">trace</span>.<span class="ruby-identifier">trace</span>(<span class="ruby-identifier">bits</span>, <span class="ruby-identifier">params</span>)
   <span class="ruby-keyword">end</span>
@@ -259,6 +258,7 @@ is a string</p>
 ]
 </pre>
           
+          
 
           
           <div class="method-source-code" id="to_a-source">
@@ -294,7 +294,7 @@ trace_as_array (VALUE klass)
       }
       rpath = rb_hash_new();
       rb_hash_aset(rpath, STRSYM(&quot;area&quot;), rb_int_new(path-&gt;area));
-      rb_hash_aset(rpath, STRSYM(&quot;sign&quot;), rb_str_new2(path-&gt;sign == '+' ? &quot;+&quot; : &quot;-&quot;));
+      rb_hash_aset(rpath, STRSYM(&quot;sign&quot;), rb_str_new2(path-&gt;sign == &#39;+&#39; ? &quot;+&quot; : &quot;-&quot;));
       rb_hash_aset(rpath, STRSYM(&quot;parts&quot;), rparts);
       rb_ary_push(result, rpath);
       path = path-&gt;next;
@@ -331,7 +331,7 @@ trace_as_array (VALUE klass)
           
           <p>Render the traced bitmap as an SVG</p>
 
-<h4 id="method-i-to_svg-label-Example">Example</h4>
+<h4 id="method-i-to_svg-label-Example">Example<span><a href="#method-i-to_svg-label-Example">&para;</a> <a href="#documentation">&uarr;</a></span></h4>
 
 <pre class="ruby"><span class="ruby-identifier">bmp</span> = <span class="ruby-constant">Potracer</span><span class="ruby-operator">::</span><span class="ruby-constant">Bitmap</span>.<span class="ruby-identifier">new</span>(<span class="ruby-value">5</span>, <span class="ruby-value">5</span>, [
   [<span class="ruby-value">1</span>, <span class="ruby-value">1</span>, <span class="ruby-value">1</span>, <span class="ruby-value">1</span>, <span class="ruby-value">1</span>],
@@ -347,6 +347,7 @@ trace_as_array (VALUE klass)
 <span class="ruby-comment">#   &lt;path fill-rule=&quot;evenodd&quot; fill=&quot;rgb(0,0,0)&quot; d=&quot;M 0.000000 2.500000 C 0.000000 0.500000 0.500000 0.000000 2.500000 0.000000C 4.500000 0.000000 5.000000 0.500000 5.000000 2.500000C 5.000000 4.500000 4.500000 5.000000 2.500000 5.000000C 0.500000 5.000000 0.000000 4.500000 0.000000 2.500000M 4.000000 2.500000 C 4.000000 1.675000 3.325000 1.000000 2.500000 1.000000C 1.675000 1.000000 1.000000 1.675000 1.000000 2.500000C 1.000000 3.325000 1.675000 4.000000 2.500000 4.000000C 3.325000 4.000000 4.000000 3.325000 4.000000 2.500000&quot; /&gt;</span>
 <span class="ruby-comment"># &lt;/svg&gt;&quot;</span>
 </pre>
+          
           
 
           
@@ -415,8 +416,10 @@ trace_as_svg (VALUE klass)
         
         <div class="method-heading">
           <span class="method-name">trace</span><span
-            class="method-args">(bitmap=nil, params=nil, &block)</span>
+            class="method-args">(bitmap = nil, params = nil, &block)</span>
+          
           <span class="method-click-advice">click to toggle source</span>
+          
         </div>
         
 
@@ -424,7 +427,7 @@ trace_as_svg (VALUE klass)
           
           <p><a href="Trace.html">Trace</a> the given <code>bitmap</code></p>
 
-<h4 id="method-i-trace-label-Attributes">Attributes</h4>
+<h4 id="method-i-trace-label-Attributes">Attributes<span><a href="#method-i-trace-label-Attributes">&para;</a> <a href="#documentation">&uarr;</a></span></h4>
 <ul><li>
 <p><code>bitmap</code> - an instance of <a
 href="Bitmap.html">Potracer::Bitmap</a>. If not given the +@bitmap+ is
@@ -436,15 +439,16 @@ href="Params.html">Potracer::Params</a>. If not given +@params+ is used.</p>
 <p><code>block</code> - optional block called to report trace progress</p>
 </li></ul>
           
+          
 
           
           <div class="method-source-code" id="trace-source">
-            <pre><span class="ruby-comment"># File lib/potracer.rb, line 25</span>
-<span class="ruby-keyword">def</span> <span class="ruby-identifier">trace</span>(<span class="ruby-identifier">bitmap</span>=<span class="ruby-keyword">nil</span>, <span class="ruby-identifier">params</span>=<span class="ruby-keyword">nil</span>, &amp;<span class="ruby-identifier">block</span>)
+            <pre><span class="ruby-comment"># File lib/potracer.rb, line 23</span>
+<span class="ruby-keyword">def</span> <span class="ruby-identifier">trace</span>(<span class="ruby-identifier">bitmap</span> = <span class="ruby-keyword">nil</span>, <span class="ruby-identifier">params</span> = <span class="ruby-keyword">nil</span>, <span class="ruby-operator">&amp;</span><span class="ruby-identifier">block</span>)
   <span class="ruby-keyword">if</span> <span class="ruby-identifier">block_given?</span>
-    <span class="ruby-keyword">self</span>.<span class="ruby-identifier">do_trace</span>(<span class="ruby-identifier">bitmap</span> <span class="ruby-operator">||</span> <span class="ruby-ivar">@bitmap</span>, <span class="ruby-identifier">params</span> <span class="ruby-operator">||</span> <span class="ruby-ivar">@params</span>, &amp;<span class="ruby-identifier">block</span>)
+    <span class="ruby-identifier">do_trace</span>(<span class="ruby-identifier">bitmap</span> <span class="ruby-operator">||</span> <span class="ruby-ivar">@bitmap</span>, <span class="ruby-identifier">params</span> <span class="ruby-operator">||</span> <span class="ruby-ivar">@params</span>, <span class="ruby-operator">&amp;</span><span class="ruby-identifier">block</span>)
   <span class="ruby-keyword">else</span>
-    <span class="ruby-keyword">self</span>.<span class="ruby-identifier">do_trace</span>(<span class="ruby-identifier">bitmap</span> <span class="ruby-operator">||</span> <span class="ruby-ivar">@bitmap</span>, <span class="ruby-identifier">params</span> <span class="ruby-operator">||</span> <span class="ruby-ivar">@params</span>)
+    <span class="ruby-identifier">do_trace</span>(<span class="ruby-identifier">bitmap</span> <span class="ruby-operator">||</span> <span class="ruby-ivar">@bitmap</span>, <span class="ruby-identifier">params</span> <span class="ruby-operator">||</span> <span class="ruby-ivar">@params</span>)
   <span class="ruby-keyword">end</span>
 <span class="ruby-keyword">end</span></pre>
           </div><!-- trace-source -->
@@ -466,7 +470,7 @@ href="Params.html">Potracer::Params</a>. If not given +@params+ is used.</p>
 
 <footer id="validator-badges">
   <p><a href="http://validator.w3.org/check/referer">[Validate]</a>
-  <p>Generated by <a href="https://github.com/rdoc/rdoc">RDoc</a> 3.12.2.
+  <p>Generated by <a href="https://github.com/rdoc/rdoc">RDoc</a> 4.0.0.
   <p>Generated with the <a href="http://deveiate.org/projects/Darkfish-Rdoc/">Darkfish Rdoc Generator</a> 3.
 </footer>
 

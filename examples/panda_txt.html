@@ -1,0 +1,185 @@
+<!DOCTYPE html>
+
+<html>
+<head>
+<meta content="text/html; charset=UTF-8" http-equiv="Content-Type">
+
+<title>panda - RDoc Documentation</title>
+
+<link type="text/css" media="screen" href="../rdoc.css" rel="stylesheet">
+
+<script type="text/javascript">
+  var rdoc_rel_prefix = "../";
+</script>
+
+<script type="text/javascript" charset="utf-8" src="../js/jquery.js"></script>
+<script type="text/javascript" charset="utf-8" src="../js/navigation.js"></script>
+<script type="text/javascript" charset="utf-8" src="../js/search_index.js"></script>
+<script type="text/javascript" charset="utf-8" src="../js/search.js"></script>
+<script type="text/javascript" charset="utf-8" src="../js/searcher.js"></script>
+<script type="text/javascript" charset="utf-8" src="../js/darkfish.js"></script>
+
+
+<body class="file">
+<nav id="metadata">
+  <nav id="home-section" class="section">
+  <h3 class="section-header">
+    <a href="../index.html">Home</a>
+    <a href="../table_of_contents.html#classes">Classes</a>
+    <a href="../table_of_contents.html#methods">Methods</a>
+  </h3>
+</nav>
+
+
+  <nav id="search-section" class="section project-section" class="initially-hidden">
+  <form action="#" method="get" accept-charset="utf-8">
+    <h3 class="section-header">
+      <input type="text" name="search" placeholder="Search" id="search-field"
+             title="Type to search, Up and Down to navigate, Enter to load">
+    </h3>
+  </form>
+
+  <ul id="search-results" class="initially-hidden"></ul>
+</nav>
+
+
+  
+
+  <div id="project-metadata">
+    <nav id="fileindex-section" class="section project-section">
+  <h3 class="section-header">Pages</h3>
+
+  <ul>
+  
+    <li class="file"><a href="../COPYING.html">COPYING</a>
+  
+    <li class="file"><a href="../COPYING_html.html">COPYING.html</a>
+  
+    <li class="file"><a href="../Gemfile.html">Gemfile</a>
+  
+    <li class="file"><a href="../Gemfile_html.html">Gemfile.html</a>
+  
+    <li class="file"><a href="../Gemfile_lock.html">Gemfile.lock</a>
+  
+    <li class="file"><a href="../Gemfile_lock_html.html">Gemfile_lock.html</a>
+  
+    <li class="file"><a href="../Object_html.html">Object.html</a>
+  
+    <li class="file"><a href="../README_rdoc.html">README</a>
+  
+    <li class="file"><a href="../Rakefile.html">Rakefile</a>
+  
+    <li class="file"><a href="../Rakefile_html.html">Rakefile.html</a>
+  
+    <li class="file"><a href="../RbConfig_html.html">RbConfig.html</a>
+  
+    <li class="file"><a href="../doc/created_rid.html">created.rid</a>
+  
+    <li class="file"><a href="../examples/hello_txt.html">hello</a>
+  
+    <li class="file"><a href="../examples/hello_txt_html.html">hello_txt.html</a>
+  
+    <li class="file"><a href="../examples/panda_txt.html">panda</a>
+  
+    <li class="file"><a href="../examples/panda_txt_html.html">panda_txt.html</a>
+  
+    <li class="file"><a href="../tmp/x86_64-linux/potracer/2_0_0/Makefile.html">Makefile</a>
+  
+    <li class="file"><a href="../tmp/x86_64-linux/potracer/2_0_0/mkmf_log.html">mkmf.log</a>
+  
+  </ul>
+</nav>
+
+    <nav id="classindex-section" class="section project-section">
+  <h3 class="section-header">Class and Module Index</h3>
+
+  <ul class="link-list">
+  
+    <li><a href="../Object.html">Object</a>
+  
+    <li><a href="../Potracer.html">Potracer</a>
+  
+    <li><a href="../Potracer/Bitmap.html">Potracer::Bitmap</a>
+  
+    <li><a href="../Potracer/Params.html">Potracer::Params</a>
+  
+    <li><a href="../Potracer/Trace.html">Potracer::Trace</a>
+  
+    <li><a href="../Potracer/Turnpolicy.html">Potracer::Turnpolicy</a>
+  
+    <li><a href="../RbConfig.html">RbConfig</a>
+  
+  </ul>
+</nav>
+
+  </div>
+</nav>
+
+<div id="documentation" class="description">
+  
+<pre>                             _,add8ba,                                             
+                           ,d888888888b,                                           
+                          d8888888888888b                        _,ad8ba,_         
+                         d888888888888888)                     ,d888888888b,       
+                         I8888888888888888 _________          ,8888888888888b      
+               __________`Y88888888888888P&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;baaa,__ ,888888888888888,     
+           ,adP&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;9888888888P&quot;&quot;^                 ^&quot;&quot;Y8888888888888888I     
+        ,a8&quot;^           ,d888P&quot;888P^                           ^&quot;Y8888888888P&#39;     
+      ,a8^            ,d8888&#39;                                     ^Y8888888P&#39;      
+     a88&#39;           ,d8888P&#39;                                        I88P&quot;^         
+   ,d88&#39;           d88888P&#39;                                          &quot;b,           
+  ,d88&#39;           d888888&#39;                                            `b,          
+ ,d88&#39;           d888888I                                              `b,         
+ d88I           ,8888888&#39;            ___                                `b,        
+,888&#39;           d8888888          ,d88888b,              ____            `b,       
+d888           ,8888888I         d88888888b,           ,d8888b,           `b</pre>
+
+<p>,8888           I8888888I        d8888888888I          ,88888888b          
+8,</p>
+
+<p>I8888           88888888b       d88888888888&#39;          8888888888b     
+8I</p>
+
+<p>d8886           888888888       Y888888888P&#39;           Y8888888888,    
+,8b</p>
+
+<p>88888b          I88888888b      `Y8888888^             `Y888888888I       
+d88,</p>
+
+<p>Y88888b         `888888888b,      `“”“”^                `Y8888888P&#39;    
+d888I</p>
+
+<p>`888888b         88888888888b,                           `Y8888P^       
+d88888</p>
+
+<pre>Y888888b       ,8888888888888ba,_          _______        `&quot;&quot;^        ,d888888     
+I8888888b,    ,888888888888888888ba,_     d88888888b               ,ad8888888I     
+`888888888b,  I8888888888888888888888b,    ^&quot;Y888P&quot;^      ____.,ad88888888888I     
+ 88888888888b,`888888888888888888888888b,     &quot;&quot;      ad888888888888888888888&#39;     
+ 8888888888888698888888888888888888888888b_,ad88ba,_,d88888888888888888888888      
+ 88888888888888888888888888888888888888888b,`&quot;&quot;&quot;^ d8888888888888888888888888I      
+ 8888888888888888888888888888888888888888888baaad888888888888888888888888888&#39;      
+ Y8888888888888888888888888888888888888888888888888888888888888888888888888P       
+ I888888888888888888888888888888888888888888888P^  ^Y8888888888888888888888&#39;       
+ `Y88888888888888888P88888888888888888888888888&#39;     ^88888888888888888888I        
+  `Y8888888888888888 `8888888888888888888888888       8888888888888888888P&#39;        
+   `Y888888888888888  `888888888888888888888888,     ,888888888888888888P&#39;         
+    `Y88888888888888b  `88888888888888888888888I     I888888888888888888&#39;          
+      &quot;Y8888888888888b  `8888888888888888888888I     I88888888888888888&#39;           
+        &quot;Y88888888888P   `888888888888888888888b     d8888888888888888&#39;            
+           ^&quot;&quot;&quot;&quot;&quot;&quot;&quot;&quot;^     `Y88888888888888888888,    888888888888888P&#39;             
+                            &quot;8888888888888888888b,   Y888888888888P^               
+                             `Y888888888888888888b   `Y8888888P&quot;^                  
+                               &quot;Y8888888888888888P     `&quot;&quot;&quot;&quot;^                      
+                                 `&quot;YY88888888888P&#39;</pre>
+
+</div>
+
+
+
+<footer id="validator-badges">
+  <p><a href="http://validator.w3.org/check/referer">[Validate]</a>
+  <p>Generated by <a href="https://github.com/rdoc/rdoc">RDoc</a> 4.0.0.
+  <p>Generated with the <a href="http://deveiate.org/projects/Darkfish-Rdoc/">Darkfish Rdoc Generator</a> 3.
+</footer>
+
