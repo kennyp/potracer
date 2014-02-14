@@ -1,12 +1,10 @@
 require_relative 'spec_helper'
 require 'potracer'
 
-
 describe Potracer::Params do
   before :each do
     @params = Potracer::Params.new
   end
-
 
   it 'should allow you to get and set the turd size' do
     @params.turd_size.should eq(2)
@@ -43,7 +41,7 @@ end
 
 describe Potracer::Turnpolicy do
   it 'should contain all available turn policies' do
-    ps = %w(BLACK WHITE LEFT RIGHT MAJORITY MINORITY RANDOM).map {|p| p.to_sym}
+    ps = %w(BLACK WHITE LEFT RIGHT MAJORITY MINORITY RANDOM).map(&:to_sym)
     Potracer::Turnpolicy.constants.should include(*ps)
   end
 end
@@ -95,9 +93,9 @@ describe Potracer::Trace do
 
   it 'should allow you to track progress as you trace' do
     x = 0
-    Potracer::Trace.new.trace(Potracer::Bitmap.new, Potracer::Params.new) do |p|
-      x = p
-    end
+    bitmap = Potracer::Bitmap.new
+    params = Potracer::Params.new
+    Potracer::Trace.new.trace(bitmap, params) { |p| x = p }
     x.should eq(100)
   end
 
@@ -116,7 +114,8 @@ describe Potracer::Trace do
   end
 
   it 'should be able to generate svgs' do
-    Potracer::Trace.bitmap(image_string, 1886, 601).to_svg.should start_with('<svg')
+    svg = Potracer::Trace.bitmap(image_string, 1886, 601).to_svg
+    svg.should start_with('<svg')
   end
 
   it 'should be able to use a callback durring tracing' do
