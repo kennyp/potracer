@@ -12,3 +12,4 @@ examples/*
 !examples/*.rb
 !examples/*.txt
 html
+/coverage
