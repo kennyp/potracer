@@ -2,7 +2,7 @@
 require 'rubygems'
 require 'progressbar'
 
-require_relative '../lib/potracer'
+require File.expand_path('../../lib/potracer', __FILE__)
 
 bits = STDIN.read.each_line.map do |l|
   l.each_char.map { |c| c == ' ' || c == "\n" ? 0 : 1 }

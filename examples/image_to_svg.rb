@@ -1,7 +1,9 @@
-require_relative './lib/potracer'
+require File.expand_path('../../lib/potracer', __FILE__)
 
-fixtures = File.join(File.dirname(__FILE__), 'spec', 'fixtures')
-image_string = File.read(File.join(fixtures, 'image_as_rgb_string.txt'))
+fixture_path = File.expand_path('../../spec/fixtures/image_as_rgb_string.txt', __FILE__)
+puts fixture_path
+image_string = File.read(fixture_path)
+
 
 File.open('out.svg', 'w') do |f|
   f.write Potracer::Trace.bitmap(image_string, 1886, 601).to_svg
