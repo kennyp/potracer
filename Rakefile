@@ -2,7 +2,6 @@ require 'date'
 
 require 'rubygems'
 require 'rake/clean'
-require 'rspec/core/rake_task'
 require 'rake/extensiontask'
 require 'rdoc/task'
 
@@ -33,10 +32,10 @@ RDoc::Task.new do |rdoc|
   rdoc.rdoc_files.include('README.rdoc', 'lib/*.rb', 'ext/**/*.c')
 end
 
-RSpec::Core::RakeTask.new(:spec)
-
-
 desc 'Run specs'
-task :default => :spec
+task :spec => :compile do
+  $LOAD_PATH.unshift('lib', 'spec')
+  Dir.glob('./spec/**/*_spec.rb') { |f| require f }
+end
 
-task :spec => :compile
+task :default => :spec
