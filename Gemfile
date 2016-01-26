@@ -5,5 +5,6 @@ group :development do
   gem 'rake-compiler'
   gem 'pry'
   gem 'progressbar'
-  gem 'coveralls', :require => false
+  gem 'coveralls', require: false
+  gem 'minitest', require: false
 end

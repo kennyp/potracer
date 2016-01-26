@@ -1,7 +1,15 @@
 language: ruby
-before_install:
-  - sudo apt-get install -y libpotrace-dev
+sudo: false
+addons:
+  apt:
+    sources:
+      - ubuntu-toolchain-r-test
+    packages:
+      - libpotrace-dev
+  code_climate:
+    repo_token: 180e7e03547123015fff4d53f2f0794e557cd225259733803c4841ab1001c425
 rvm:
+  - 2.2.3
   - 2.1.5
   - 2.1.1
   - 2.1.0
