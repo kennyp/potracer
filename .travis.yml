@@ -2,6 +2,7 @@ language: ruby
 sudo: true
 before_install:
   - sudo apt-get install libpotrace-dev
+  - sudo gem update --system
 addons:
   code_climate:
     repo_token: 180e7e03547123015fff4d53f2f0794e557cd225259733803c4841ab1001c425
