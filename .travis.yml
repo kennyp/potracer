@@ -1,12 +1,11 @@
 language: ruby
 sudo: false
+before_install:
+  - gem update --system
 addons:
   apt:
     packages:
       - libpotrace-dev
-before_install:
-  - gem update --system
-addons:
   code_climate:
     repo_token: 180e7e03547123015fff4d53f2f0794e557cd225259733803c4841ab1001c425
 rvm:
