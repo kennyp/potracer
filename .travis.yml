@@ -2,7 +2,7 @@ language: ruby
 sudo: false
 addons:
   apt:
-    sources:
+    packages:
       - libpotrace-dev
 before_install:
   - gem update --system
