@@ -260,7 +260,7 @@ trace_as_svg (VALUE klass)
 {
   FILE *out = tmpfile();
   char *out_buffer;
-  long size;
+  unsigned long size;
   VALUE svg;
   potrace_path_t *path;
   int i, num_segments, *tag;
@@ -299,7 +299,9 @@ trace_as_svg (VALUE klass)
   size = ftell(out);
   out_buffer = ALLOC_N(char, size);
   rewind(out);
-  fread(out_buffer, 1, size, out);
+  if (fread(out_buffer, 1, size, out) != size) {
+      rb_warn("expected to read %ld", size);
+  }
   fclose(out);
   svg = rb_str_new(out_buffer, size);
   xfree(out_buffer);

@@ -8,12 +8,10 @@ bits = STDIN.read.each_line.map do |l|
   l.each_char.map { |c| c == ' ' || c == "\n" ? 0 : 1 }
 end
 
-pbar = ProgressBar.new('trace', 100)
+pbar = ProgressBar.create(title: 'trace', total: 100, output: $stderr)
 
 trace = Potracer::Trace.bitmap(bits) do |p|
-  pbar.set p
+  pbar.progress = p
 end
-
-pbar.finish
 
 puts trace.to_svg
