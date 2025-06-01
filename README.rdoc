@@ -2,8 +2,9 @@
 
 Potracer is a wrapper for {libpotrace}[http://potrace.sourceforge.net/].
 
-{<img src="https://travis-ci.org/kennyp/potracer.png" />}[https://travis-ci.org/kennyp/potracer] {<img src="https://codeclimate.com/github/kennyp/potracer/badges/gpa.svg" />}[https://codeclimate.com/github/kennyp/potracer] {<img src="https://coveralls.io/repos/kennyp/potracer/badge.svg?branch=master" alt="Coverage Status" />}[https://coveralls.io/r/kennyp/potracer?branch=master]
+image:https://github.com/kennyp/potracer/actions/workflows/ci.yml/badge.svg[Build Status]
 
+Potracer is compatible with Ruby 3.0 and newer. The project uses GitHub Actions for continuous integration.
 
 == About Potrace
 

@@ -18,6 +18,7 @@ spec = Gem::Specification.new do |s|
   s.files       = FileList['lib/*.rb'] + FileList['ext/**/*.{h,c,rb}']
   s.extensions  = FileList['ext/**/extconf.rb']
   s.homepage    = 'https://github.com/kennyp/potracer'
+  s.license     = 'GPL-2.0'
 end
 
 Gem::PackageTask.new(spec) do |pkg|

@@ -484,8 +484,7 @@ bitmap_as_array (VALUE klass)
   return result;
 }
 
-void
-Init_potracer () {
+void Init_potracer(void) {
   /**
    * Define-module: Potracer
    * A home for all things Potrace
@@ -569,6 +568,7 @@ Init_potracer () {
    *   The Bitmap is Potracer's representation of a bitmap in memory
    */
   rb_cPotracerBitmap = rb_define_class_under(rb_mPotracer, "Bitmap", rb_cObject);
+  rb_undef_alloc_func(rb_cPotracerBitmap); // Explicitly undefine .allocate
   rb_define_singleton_method(rb_cPotracerBitmap, "new", bitmap_new, -1);
   rb_define_method(rb_cPotracerBitmap, "width", bitmap_get_width, 0);
   rb_define_method(rb_cPotracerBitmap, "height", bitmap_get_height, 0);

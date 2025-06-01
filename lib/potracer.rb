@@ -66,12 +66,22 @@ module Potracer
     private
 
     def self.make_bits(bitmap, width, height, map)
-      width ||= bitmap.map { |r| r.length }.max
-      height ||= bitmap.length
+      if bitmap.is_a?(Array) && !bitmap.is_a?(String) # Check it's an array of arrays
+        derived_height = bitmap.length
+        derived_width = bitmap.empty? ? 0 : bitmap.map { |r| r.length }.max
 
-      unless bitmap.is_a? String
-        bitmap.map! { |r| r.fill(0, r.length, width - r.length) }
+        width ||= derived_width
+        height ||= derived_height
+
+        # Pad rows to ensure all have the same length (width)
+        # This should only happen if we have a valid width (greater than 0)
+        if width && width > 0
+          bitmap.map! { |r| r.fill(0, r.length, width - r.length) }
+        end
       end
+      # For string inputs, or if width/height were not determined from an array,
+      # they must be explicitly passed or Potracer::Bitmap.new must handle nil width/height if that's valid.
+      # Given the C error, width & height must be integers for Potracer::Bitmap.new.
 
       Potracer::Bitmap.new(width, height, bitmap, map)
     end
